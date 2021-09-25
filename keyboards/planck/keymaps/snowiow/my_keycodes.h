@@ -1,4 +1,5 @@
 #define SPC_NUM LT(_NUMBERS, KC_SPC)
+#define ESC_SYM LT(_SYMBOLS, KC_ESC)
 
 // Left-hand home row mods
 #define HOME_A LGUI_T(KC_A)
