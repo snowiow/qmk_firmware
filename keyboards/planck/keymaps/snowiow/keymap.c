@@ -25,7 +25,7 @@ enum planck_layers {
   _DVORAK,
   _LOWER,
   _RAISE,
-  _NUMPAD,
+  _NUMBERS,
   _PLOVER,
   _ADJUST,
 };
@@ -37,7 +37,6 @@ enum planck_keycodes {
   PLOVER,
   BACKLIT,
   EXT_PLV,
-  ENTOG, // Press Enter and leave Toggle Mode
   W1, // Workspace Key 1. Makros for GUI+Number
   W2, // Workspace Key 2. Makros for GUI+Number
   W3, // Workspace Key 3. Makros for GUI+Number
@@ -52,7 +51,6 @@ enum planck_keycodes {
 
 #define LOWER MO(_LOWER)
 #define RAISE MO(_RAISE)
-#define NUMPAD TG(_NUMPAD)
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
@@ -64,32 +62,32 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+------+------+------+------+------+------+-------|
  * | Shift|   Z  |   X  |   C  |   V  |   B  |   N  |   M  |   ,  |   .  |   /  |Enter  |
  * |------+------+------+------+------+------+------+------+------+------+------+-------|
- * | Brite| Ctrl | Alt  | GUI  |Lower |    Space    |Raise | Left | Down |  Up  |Numpad |
+ * | Brite| Ctrl | Alt  | GUI  |Lower |    Space    |Raise | Left | Down |  Up  |       |
  * `------------------------------------------------------------------------------------'
  */
 [_QWERTY] = LAYOUT_planck_grid(
     KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_BSPC,
     KC_ESC,  KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT,
     KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_ENT ,
-    BACKLIT, KC_LCTL, KC_LALT, KC_LGUI, LOWER,   KC_SPC,  KC_SPC,  RAISE,   KC_LEFT, KC_DOWN, KC_UP,   NUMPAD
+    BACKLIT, KC_LCTL, KC_LALT, KC_LGUI, LOWER,   KC_SPC,  KC_SPC,  RAISE,   KC_LEFT, KC_DOWN, KC_UP, _______
 ),
 
 /* Colemak DH
- * ,-----------------------------------------------------------------------------------.
- * | Tab  |   Q  |   W  |   F  |   P  |   B  |   J  |   L  |   U  |   Y  |   ;  | Bksp |
- * |------+------+------+------+------+------+------+------+------+------+------+------|
- * | Esc  |HOME_A|HOME_R|HOME_S|HOME_T|   G  |   M  |HOME_N|HOME_E|HOME_I|HOME_O|  "   |
- * |------+------+------+------+------+------+------+------+------+------+------+------|
- * | Shift|   Z  |   X  |   C  |   D  |   V  |   K  |   H  |   ,  |   .  |   /  |Enter |
- * |------+------+------+------+------+------+------+------+------+------+------+------|
- * | Brite| Ctrl | Alt  | GUI  |Lower |Space | ESC  |Raise | Left | Down |  Up  |Numpad|
- * `-----------------------------------------------------------------------------------'
+ * ,------------------------------------------------------------------------------------.
+ * | Tab  |   Q  |   W  |   F  |   P  |   B   |   J  |   L  |   U  |   Y  |   ;  | Bksp |
+ * |------+------+------+------+------+-------+------+------+------+------+------+------|
+ * | Esc  |HOME_A|HOME_R|HOME_S|HOME_T|   G   |   M  |HOME_N|HOME_E|HOME_I|HOME_O|  "   |
+ * |------+------+------+------+------+-------+------+------+------+------+------+------|
+ * | Shift|   Z  |   X  |   C  |   D  |   V   |   K  |   H  |   ,  |   .  |   /  |Enter |
+ * |------+------+------+------+------+-------+------+------+------+------+------+------|
+ * | Brite| Ctrl | Alt  | GUI  |Lower |SPC_NUM| ESC  |Raise | Left | Down |  Up  |      |
+ * `------------------------------------------------------------------------------------'
  */
 [_COLEMAK] = LAYOUT_planck_grid(
-    KC_TAB,  KC_Q,    KC_W,    KC_F,    KC_P,   KC_B,   KC_J,   KC_L,   KC_U,    KC_Y,    KC_SCLN, KC_BSPC,
-    KC_ESC,  HOME_A,  HOME_R,  HOME_S,  HOME_T, KC_G,   KC_M,   HOME_N, HOME_E,  HOME_I,  HOME_O,  KC_QUOT,
-    KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_D,   KC_V,   KC_K,   KC_H,   KC_COMM, KC_DOT,  KC_SLSH, KC_ENT,
-    BACKLIT, KC_LCTL, KC_LALT, KC_LGUI, LOWER,  KC_SPC, KC_ESC, RAISE,  KC_LEFT, KC_DOWN, KC_UP,   NUMPAD
+    KC_TAB,  KC_Q,    KC_W,    KC_F,    KC_P,   KC_B,    KC_J,   KC_L,   KC_U,    KC_Y,    KC_SCLN, KC_BSPC,
+    KC_ESC,  HOME_A,  HOME_R,  HOME_S,  HOME_T, KC_G,    KC_M,   HOME_N, HOME_E,  HOME_I,  HOME_O,  KC_QUOT,
+    KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_D,   KC_V,    KC_K,   KC_H,   KC_COMM, KC_DOT,  KC_SLSH, KC_ENT,
+    BACKLIT, KC_LCTL, KC_LALT, KC_LGUI, LOWER,  SPC_NUM, KC_ESC, RAISE,  KC_LEFT, KC_DOWN, KC_UP, _______
 ),
 
 /* Dvorak
@@ -145,21 +143,21 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     _______, _______, _______, _______, _______, _______, _______, _______, KC_MNXT, KC_VOLD, KC_VOLU, KC_MPLY
 ),
 
-/* Numpad
+/* Numbers
  * ,-----------------------------------------------------------------------------------.
- * |Entog |   7  |   8  |   9  | Bksp |   5  |   6  |   7  |   8  |   9  |   0  | Bksp |
+ * |      |      |      |      |      |      |      |  7   |  8   |  9   |      |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * | Del  |   4  |   5  |   6  |  -   |  F5  |  F6  |   -  |   =  |   [  |   ]  |  \   |
+ * |      |      |      |      |      |      |      |  4   |  5   |  6   |  0   |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * | Bksp |   1  |   2  |   3  |  +   | Next |  F12 |   -  |   =  |   [  |   ]  |      |
+ * |      |      |      |      |      |      |      |  1   |  2   |  3   |      |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |  *   |   0  |   ,  |   .  |  /   |    Space    |      | next | vol- | vol+ |      |
+ * |      |      |      |      |      |      |      |      |      |      |      |      |
  */
-[_NUMPAD] = LAYOUT_planck_grid(
-    ENTOG,   KC_7, KC_8,    KC_9,   KC_BSPC, KC_5,    KC_6,   KC_7,    KC_8,    KC_9,    KC_0,    KC_BSPC,
-    KC_DEL,  KC_4, KC_5,    KC_6,   KC_MINS, KC_F5,   KC_F6,  KC_MINS, KC_EQL,  KC_LBRC, KC_RBRC, KC_BSLS,
-    KC_BSPC, KC_1, KC_2,    KC_3,   KC_PLUS, KC_MNXT, KC_F12, KC_MINS, KC_EQL, KC_LBRC, KC_RBRC, _______,
-    KC_ASTR, KC_0, KC_COMM, KC_DOT, KC_SLSH, KC_SPC,  KC_SPC, _______, KC_MNXT, KC_VOLD, KC_VOLU, _______
+[_NUMBERS] = LAYOUT_planck_grid(
+    _______, _______, _______, _______,  _______, _______, _______, KC_7, KC_8, KC_9, _______, _______,
+    _______, _______, _______, _______,  _______, _______, _______, KC_4, KC_5, KC_6, KC_0,    _______,
+    _______, _______, _______,  _______, _______, _______, _______, KC_1, KC_2, KC_3, _______, _______,
+    _______, _______, _______, _______,  _______, _______, _______, _______, _______, _______, _______, _______
 ),
 /* Plover layer (http://opensteno.org)
  * ,-----------------------------------------------------------------------------------.
@@ -274,14 +272,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         layer_off(_PLOVER);
       }
       return false;
-      break;
-    case ENTOG:
-      if (record->event.pressed) {
-        if (layer_state_is(_NUMPAD)) {
-          tap_code(KC_ENT);
-          layer_off(_NUMPAD);
-        }
-      }
       break;
     case W1:
       if (record->event.pressed) {

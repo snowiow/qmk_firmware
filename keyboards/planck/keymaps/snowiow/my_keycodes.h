@@ -1,3 +1,5 @@
+#define SPC_NUM LT(_NUMBERS, KC_SPC)
+
 // Left-hand home row mods
 #define HOME_A LGUI_T(KC_A)
 #define HOME_R LCTL_T(KC_R)
