@@ -27,6 +27,7 @@ enum planck_layers {
   _RAISE,
   _NUMBERS,
   _SYMBOLS,
+  _WM,
   _PLOVER,
   _ADJUST,
 };
@@ -81,14 +82,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+--------+-------+-------+------+-------+------+------+------+------|
  * |   Z  |  X   |  C   |   D    |   V   |   [   |   ]  |   K   |   H  |   ,  |   .  |  '   |
  * |------+------+------+--------+-------+-------+------+-------+------+------+------+------|
- * |      |      |      |QUOT_NAV|SPC_NUM| Bspc  |Enter |ESC_SYM|Raise |      |      |      |
+ * |      |      |      |QUOT_NAV|SPC_NUM|ENT_WM | Bspc |ESC_SYM|Raise |      |      |      |
  * `----------------------------------------------------------------------------------------'
  */
 [_COLEMAK] = LAYOUT_planck_grid(
     KC_Q,    KC_W,    KC_F,    KC_P,      KC_B,    KC_LCBR,  KC_RCBR, KC_J,     KC_L,   KC_U,    KC_Y,    KC_SCLN,
     HOME_A,  HOME_R,  HOME_S,  HOME_T,    KC_G,    KC_LPRN,  KC_RPRN, KC_M,     HOME_N, HOME_E,  HOME_I,  HOME_O,
     KC_Z,    KC_X,    KC_C,    KC_D,      KC_V,    KC_LBRC,  KC_RBRC, KC_K,     KC_H,   KC_COMM, KC_DOT,  KC_SLSH,
-    BACKLIT, KC_LCTL, KC_LGUI, QUOT_NAV,  SPC_NUM, KC_BSPC,  KC_ENT,  ESC_SYM, TAB_NAV,  _______, _______, _______
+    BACKLIT, KC_LCTL, KC_LGUI, QUOT_NAV,  SPC_NUM, ENT_WM,  KC_BSPC,  ESC_SYM, TAB_NAV,  _______, _______, _______
 ),
 
 /* Dvorak
@@ -176,6 +177,23 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_UNDS, KC_MINS, KC_PLUS, KC_EQL,  KC_SLSH, KC_RPRN, _______, KC_LSFT, KC_LALT, KC_LCTL, KC_LGUI, _______,
     KC_AT,   KC_TILD, KC_EXLM, KC_DLR,  KC_LBRC, KC_RBRC, _______, _______, _______, _______, _______, _______,
     _______, KC_PIPE, KC_BSLS, KC_HASH, KC_GRV,  _______, _______, _______, _______, _______, _______, _______
+),
+
+/* Window Manager
+ * ,-----------------------------------------------------------------------------------.
+ * |      |      |      |      |      |      |      |      |      |      |      |      |
+ * |------+------+------+------+------+------+------+------+------+------+------+------|
+ * | GUI  | Ctrl | Alt  |Shift |      |      |      |      |      |      |      |      |
+ * |------+------+------+------+------+------+------+------+------+------+------+------|
+ * |      |      |      |      |      |      |      |      |      |      |      |      |
+ * |------+------+------+------+------+------+------+------+------+------+------+------|
+ * |      |      |      |      |      |      |      |      |      |      |      |      |
+ */
+[_WM] = LAYOUT_planck_grid(
+    _______, _______, _______, _______, _______, _______, _______, _______, W7,      W8,      W9,      _______,
+    KC_LGUI, KC_LCTL, KC_LALT, KC_LSFT, _______, _______, _______, _______, W4,      W5,      W6,      W0,
+    _______, _______, _______, _______, _______, _______, _______, _______, W1,      W2,      W3,      _______,
+    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
 ),
 /* Plover layer (http://opensteno.org)
  * ,-----------------------------------------------------------------------------------.
