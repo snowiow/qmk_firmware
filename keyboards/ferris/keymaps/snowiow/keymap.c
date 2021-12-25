@@ -1,4 +1,5 @@
 #include QMK_KEYBOARD_H
+#include "my_keycodes.h"
 
 /* Colemak DH
  * ,----------------------------------------------------------------------------------------.
@@ -13,10 +14,10 @@
  */
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	[0] = LAYOUT(
-                 KC_Q,         KC_W,         KC_F,         KC_P,       KC_B,    KC_J,         KC_L,       KC_U,            KC_Y,       KC_SCLN,
-                 LSFT_T(KC_A), LT(5,KC_R),   LT(1,KC_S),   LT(3,KC_T), KC_G,    KC_M,         LT(4,KC_N), LT(2,KC_E),      LT(6,KC_I), LSFT_T(KC_O),
-                 KC_Z,         LCTL_T(KC_X), LALT_T(KC_C), KC_D,       KC_V,    KC_K,         KC_H,       LALT_T(KC_COMM), LCTL_T(KC_DOT), KC_SLSH,
-                                                           KC_P0,      KC_BSPC, LT(7,KC_SPC), KC_P1
+                 KC_Q,   KC_W,         KC_F,         KC_P,       KC_B,    KC_J,         KC_L,   KC_U,            KC_Y,           KC_SCLN,
+                 HOME_A, HOME_R,       HOME_S,       HOME_T,     KC_G,    KC_M,         HOME_N, HOME_E,          HOME_I,         HOME_O,
+                 KC_Z,   LCTL_T(KC_X), LALT_T(KC_C), KC_D,       KC_V,    KC_K,         KC_H,   LALT_T(KC_COMM), LCTL_T(KC_DOT), KC_SLSH,
+                                                     KC_P0,      KC_BSPC, LT(7,KC_SPC), KC_P1
     ),
 	[1] = LAYOUT(KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_BTN1, KC_WH_U, KC_BTN2, KC_TRNS, KC_TRNS, KC_BTN2, KC_NO, KC_BTN1, KC_TRNS, KC_TRNS, KC_MS_L, KC_MS_D, KC_MS_U, KC_MS_R, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_WH_L, KC_WH_D, KC_WH_R, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS),
 	[2] = LAYOUT(KC_TRNS, KC_TRNS, KC_PGUP, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_LEFT, KC_UP, KC_DOWN, KC_RGHT, KC_TRNS, KC_TRNS, KC_LGUI, KC_NO, LCTL(KC_LALT), LCA(KC_LSFT), KC_TRNS, KC_HOME, KC_PGDN, KC_END, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS),
