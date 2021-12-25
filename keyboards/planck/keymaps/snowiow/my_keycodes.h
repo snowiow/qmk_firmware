@@ -1,5 +1,9 @@
 #define SPC_NUM LT(_NUMBERS, KC_SPC)
 #define ESC_SYM LT(_SYMBOLS, KC_ESC)
+#define TAB_NAV LT(_RAISE, KC_TAB)
+#define QUOT_NAV LT(_NAV, KC_QUOT)
+#define ENT_WM LT(_WM, KC_ENT)
+
 
 // Left-hand home row mods
 #define HOME_A LGUI_T(KC_A)
