@@ -5,6 +5,7 @@ enum layers {
   _COLEMAK,
   _NAV,
   _NUMBER,
+  _MOUSE,
   _SYM1,
   _SYM2,
 };
@@ -24,8 +25,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 [_COLEMAK] = LAYOUT(
 KC_Q,   KC_W,         KC_F,         KC_P,            KC_B,              KC_J,               KC_L,             KC_U,            KC_Y,           KC_SCLN,
-HOME_A, HOME_R,       HOME_S,       HOME_T,          KC_G,              KC_M,               HOME_N,           HOME_E,          HOME_I,         HOME_O,
-KC_Z,   LCTL_T(KC_X), LALT_T(KC_C), KC_D,            KC_V,              KC_K,               KC_H,             LALT_T(KC_COMM), LCTL_T(KC_DOT), KC_SLSH,
+HOME_A, HOME_R,       HOME_S,       HOME_T,          LT(_MOUSE, KC_G),  KC_M,               HOME_N,           HOME_E,          HOME_I,         HOME_O,
+KC_Z,   KC_X,         KC_C, KC_D,   KC_V,            KC_K,              KC_H,               KC_COMM,          KC_DOT,          KC_SLSH,
                                     LT(_NAV,KC_ENT), LT(_NUMBER, KC_SPC),  LT(_SYM1, KC_BSPC), LT(_SYM2, KC_ESC)
 ),
 
@@ -63,6 +64,24 @@ _______, _______, _______, _______, _______, _______,  KC_7,    KC_8, KC_9, KC_D
 KC_LGUI, KC_LCTL, KC_LALT, KC_LSFT, _______, _______,  KC_4,    KC_5, KC_6, KC_0,
 _______, _______, _______, _______, _______, _______,  KC_1,    KC_2, KC_3, KC_COMM,
                            _______, _______, KC_TAB, KC_CAPSLOCK
+),
+
+/* Mouse 
+ * ,-----------------------------------------------------------------------------------------.
+ * |      |      |      |        |       |              |  Down | Right |       |  9   |  .   |
+ * |------+------+------+--------+-------+--------------+-------+-------+-------+------+------|
+ * | GUI  | Ctrl | Alt  | Shift  |       |              |  BTN1 | BTN2  |       |  6   |  0   |
+ * |------+------+------+--------+-------+--------------+-------+-------+-------+------+------|
+ * |      |      |      |        |       |              | Up    | Left  |       |  3   |  ,   |
+ * |------+------+------+--------+-------+--------------+-------+-------+-------+------+------|
+ * |      |      |      |        |       |              |       |       |                     |
+ * `------------------------------------------------------------------------------------------'
+ */
+[_MOUSE] = LAYOUT(
+_______, _______, _______, _______, _______, KC_MS_D, KC_MS_R, KC_9,     KC_DOT, _______,  
+KC_LGUI, KC_LCTL, KC_LALT, KC_LSFT, _______, KC_BTN1, KC_BTN2, KC_6,     KC_0, _______,  
+_______, _______, _______, _______, _______, KC_MS_U, KC_MS_L, _______, _______, _______,  
+                           _______, _______, _______, _______
 ),
 
 /* Sym1 
