@@ -9,6 +9,14 @@ enum layers {
   _SYM1,
   _SYM2,
   _FKEYS,
+  _FG,
+};
+
+enum custom_keycodes {
+	GC_UP = SAFE_RANGE,
+	GC_LEFT,
+	GC_DOWN,
+	GC_RIGHT
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -32,20 +40,20 @@ KC_Z,   KC_X,         KC_C, KC_D,   KC_V,            KC_K,              KC_H,   
 ),
 
 /* Navigation 
- * ,----------------------------------------------------------------------------------------.
- * |Reset |      |      |        |       |              |       |      |      |      |      |
- * |------+------+------+--------+-------+--------------+-------+------+------+------+------|
- * |      |      |      |        |       |              | LEFT  | DOWN | UP   | RIGHT|      |
- * |------+------+------+--------+-------+--------------+-------+------+------+------+------|
- * |      |      |      |        |       |              | PREV  | VOL- | PLAY | VOL+ | NEXT |
- * |------+------+------+--------+-------+--------------+-------+------+------+------+------|
- * |      |      |      |        |       |              |       |      |      |      |      |
- * `----------------------------------------------------------------------------------------'
+ * ,--------------------------------------------------------------------------------------------.
+ * |  Reset   |      |      |        |       |              |       |      |      |      |      |
+ * |----------+------+------+--------+-------+--------------+-------+------+------+------+------|
+ * |          |      |      |        |       |              | LEFT  | DOWN | UP   | RIGHT|      |
+ * |----------+------+------+--------+-------+--------------+-------+------+------+------+------|
+ * | FG_LAYER |      |      |        |       |              | PREV  | VOL- | PLAY | VOL+ | NEXT |
+ * |----------+------+------+--------+-------+--------------+-------+------+------+------+------|
+ * |          |      |      |        |       |              |       |      |      |      |      |
+ * `--------------------------------------------------------------------------------------------'
  */
 [_NAV] = LAYOUT(
-RESET,   _______, _______, _______, _______, _______, _______, _______, _______, _______,
-_______, _______, _______, _______, _______, KC_LEFT, KC_DOWN, KC_UP, KC_RIGHT, _______,
-_______, _______, _______, _______, _______, KC_MPRV, KC_VOLD, KC_MPLY, KC_VOLU,  KC_MNXT,
+RESET,   _______, _______, _______, _______, _______, _______, _______, _______,  _______,
+_______, _______, _______, _______, _______, KC_LEFT, KC_DOWN, KC_UP, KC_RIGHT,   _______,
+TG(_FG), _______, _______, _______, _______, KC_MPRV, KC_VOLD, KC_MPLY, KC_VOLU,  KC_MNXT,
                             _______, _______, _______, _______
 ),
 
@@ -138,4 +146,95 @@ _______, _______, KC_HASH, KC_LPRN, KC_RPRN, _______, KC_LSFT, KC_LALT, KC_LCTL,
 _______, _______, _______, KC_LBRC, KC_RBRC, _______, _______, _______, _______, _______,
                            _______, _______, _______, _______
 ),
+
+/* FG
+ * ,-----------------------------------------------------------------------------------------.
+ * | EXIT |      |      |        |       |              |       |       |      |      |      |
+ * |------+------+------+--------+-------+--------------+-------+-------+------+------+------|
+ * |      | LEFT | DOWN | RIGHT  |       |              |       |   X   |  Y   |  D   |  F   |
+ * |------+------+------+--------+-------+--------------+-------+-------+------+------+------|
+ * |      |      |      |        |       |              |       |   A   |  B   |  C   |  E   |
+ * |------+------+------+--------+-------+--------------+-------+-------+------+------+------|
+ * |      |      |      |        | SPC   |              |       |       |      |      |      |
+ * `-----------------------------------------------------------------------------------------'
+ */
+[_FG] = LAYOUT(
+TG(_FG), _______, _______, _______,  _______, _______, _______, _______, _______, _______,
+_______, GC_LEFT, GC_DOWN, GC_RIGHT, _______, _______, KC_X,    KC_Y,    KC_D,    KC_F, 
+_______, _______, _______, _______,  _______, _______, KC_A,    KC_B,    KC_C,    KC_E,
+                           _______,  GC_UP, _______, _______
+),
+};
+
+bool pressed_up = false;
+bool pressed_down = false;
+
+bool pressed_left = false;
+bool pressed_right = false;
+
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+	switch (keycode) {
+		case GC_UP:
+			if (record->event.pressed) {
+				pressed_up = true;
+				register_code(KC_SPC);
+				if (pressed_down) {
+					unregister_code(KC_DOWN);
+				}
+			} else {
+				pressed_up = false;
+				unregister_code(KC_SPC);
+				if (pressed_down) {
+                  register_code(KC_DOWN);
+				}
+			}
+			return false;
+		case GC_DOWN:
+			if (record->event.pressed) {
+				pressed_down = true;
+				if (pressed_up) {
+					register_code(KC_NO);
+				} else {
+                    register_code(KC_DOWN);
+				}
+			} else {
+				pressed_down = false;
+				unregister_code(KC_DOWN);
+			}
+			return false;
+		case GC_LEFT:
+			if (record->event.pressed) {
+				pressed_left = true;
+				if (pressed_right) {
+                  unregister_code(KC_RIGHT);
+				} else {
+					register_code(KC_LEFT);
+				}
+			} else {
+				pressed_left = false;
+				unregister_code(KC_LEFT);
+				if (pressed_right) {
+					register_code(KC_RIGHT);
+				}
+			}
+			return false;
+		case GC_RIGHT:
+			if (record->event.pressed) {
+				pressed_right = true;
+				if (pressed_left) {
+					unregister_code(KC_LEFT);
+				} else {
+                    register_code(KC_RIGHT);
+				}
+			} else {
+				pressed_right = false;
+				unregister_code(KC_RIGHT);
+				if (pressed_left) {
+                    register_code(KC_LEFT);
+				}
+			}
+			return false;
+		default:
+			return true;
+	}
 };
