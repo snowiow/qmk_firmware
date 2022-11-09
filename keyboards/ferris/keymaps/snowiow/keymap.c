@@ -12,7 +12,7 @@ enum layers {
   _FG,
 };
 
-enum custom_keycodes {
+enum custom_keycodes {      
 	GC_UP = SAFE_RANGE,
 	GC_LEFT,
 	GC_DOWN,
@@ -23,9 +23,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 /* Colemak DH
  * ,---------------------------------------------------------------------------------------------------.
- * |   Q  |   W  |   F  |   P     |   B     |              |   J       |   L      |   U  |   Y  |  ;   |
+ * |   Q  |   W  |   F  | Mouse/P |   B     |              |   J       |   L      |   U  |   Y  |  ;   |
  * |------+------+------+---------+---------+--------------+-----------+----------+------+------+------|
- * |HOME_A|HOME_R|HOME_S| HOME_T  |   G     |              |   M       | HOME_N   |HOME_E|HOME_I|HOME_O|
+ * |HOME_A|HOME_R|HOME_S| HOME_T  | HOME_G  |              |  HOME_M   | HOME_N   |HOME_E|HOME_I|HOME_O|
  * |------+------+------+---------+---------+--------------+-----------+----------+------+------+------|
  * |   Z  |  X   |  C   |   D     |   V     |              |   K       |   H      |   ,  |   .  |  /   |
  * |------+------+------+---------+---------+--------------+-----------+----------+------+------+------|
@@ -33,10 +33,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * `---------------------------------------------------------------------------------------------------'
  */
 [_COLEMAK] = LAYOUT(
-KC_Q,   KC_W,         KC_F,         KC_P,            KC_B,              KC_J,               KC_L,             KC_U,            KC_Y,           KC_SCLN,
-HOME_A, HOME_R,       HOME_S,       HOME_T,          LT(_MOUSE, KC_G),  KC_M,               HOME_N,           HOME_E,          HOME_I,         HOME_O,
-KC_Z,   KC_X,         KC_C, KC_D,   KC_V,            KC_K,              KC_H,               KC_COMM,          KC_DOT,          KC_SLSH,
-                                    LT(_NAV,KC_ENT), LT(_NUMBER, KC_SPC),  LT(_SYM1, KC_BSPC), LT(_SYM2, KC_ESC)
+KC_Q,   KC_W,         KC_F,         LT(_MOUSE, KC_P), KC_B,              KC_J,               KC_L,             KC_U,            KC_Y,           KC_SCLN,
+HOME_A, HOME_R,       HOME_S,       HOME_T,           HOME_G,            HOME_M,               HOME_N,           HOME_E,          HOME_I,         HOME_O,
+KC_Z,   KC_X,         KC_C, KC_D,   KC_V,             KC_K,              KC_H,               KC_COMM,          KC_DOT,          KC_SLSH,
+                                    LT(_NAV,KC_ENT),  LT(_NUMBER, KC_SPC),  LT(_SYM1, KC_BSPC), LT(_SYM2, KC_ESC)
 ),
 
 /* Navigation 
@@ -147,23 +147,22 @@ _______, _______, _______, KC_LBRC, KC_RBRC, _______, _______, _______, _______,
                            _______, _______, _______, _______
 ),
 
-/* FG
+/* FG 
  * ,-----------------------------------------------------------------------------------------.
- * | EXIT |      |      |        |       |              |       |       |      |      |      |
+ * | EXIT |      |      |  P     |  Alt  |              |  Tab  |   L   |   U  |  Y   |      |
  * |------+------+------+--------+-------+--------------+-------+-------+------+------+------|
- * |      | LEFT | DOWN | RIGHT  |       |              |       |   X   |  Y   |  D   |  F   |
+ * |      | R    | S    |  T     |       |              |       |   N   |  E   |  I   |  O   |
  * |------+------+------+--------+-------+--------------+-------+-------+------+------+------|
- * |      |      |      |        |       |              |       |   A   |  B   |  C   |  E   |
+ * |      |      |      |        |       |              |       |   H   |  ,   |  .   |  -   |
  * |------+------+------+--------+-------+--------------+-------+-------+------+------+------|
- * |      |      |      |        | SPC   |              |       |       |      |      |      |
+ * |      |      |      | ENTER  | SPC   |              |       | ESC   |      |      |      |
  * `-----------------------------------------------------------------------------------------'
  */
 [_FG] = LAYOUT(
-TG(_FG), _______, _______, _______,  _______, _______, _______, _______, _______, _______,
-_______, GC_LEFT, GC_DOWN, GC_RIGHT, _______, _______, KC_X,    KC_Y,    KC_D,    KC_F, 
-_______, _______, _______, _______,  _______, _______, KC_A,    KC_B,    KC_C,    KC_E,
-                           _______,  GC_UP, _______, _______
-),
+TG(_FG), _______, _______, KC_P,     KC_LALT, KC_TAB,  KC_L, KC_U,    KC_Y,   _______,
+GC_LEFT, GC_LEFT, GC_DOWN, GC_RIGHT, _______, _______, KC_N, KC_E,    KC_I,   KC_O, 
+_______, _______, _______, _______,  _______, _______, KC_H, KC_COMM, KC_DOT, KC_SLSH,
+                           KC_ENT,  GC_UP,    _______, KC_ESC),
 };
 
 bool pressed_up = false;
@@ -179,13 +178,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 				pressed_up = true;
 				register_code(KC_SPC);
 				if (pressed_down) {
-					unregister_code(KC_DOWN);
+					unregister_code(KC_S);
 				}
 			} else {
 				pressed_up = false;
 				unregister_code(KC_SPC);
 				if (pressed_down) {
-                  register_code(KC_DOWN);
+                  register_code(KC_S);
 				}
 			}
 			return false;
@@ -195,26 +194,26 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 				if (pressed_up) {
 					register_code(KC_NO);
 				} else {
-                    register_code(KC_DOWN);
+                    register_code(KC_S);
 				}
 			} else {
 				pressed_down = false;
-				unregister_code(KC_DOWN);
+				unregister_code(KC_S);
 			}
 			return false;
 		case GC_LEFT:
 			if (record->event.pressed) {
 				pressed_left = true;
 				if (pressed_right) {
-                  unregister_code(KC_RIGHT);
+                  unregister_code(KC_T);
 				} else {
-					register_code(KC_LEFT);
+					register_code(KC_R);
 				}
 			} else {
 				pressed_left = false;
-				unregister_code(KC_LEFT);
+				unregister_code(KC_R);
 				if (pressed_right) {
-					register_code(KC_RIGHT);
+					register_code(KC_T);
 				}
 			}
 			return false;
@@ -222,15 +221,15 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 			if (record->event.pressed) {
 				pressed_right = true;
 				if (pressed_left) {
-					unregister_code(KC_LEFT);
+					unregister_code(KC_R);
 				} else {
-                    register_code(KC_RIGHT);
+                    register_code(KC_T);
 				}
 			} else {
 				pressed_right = false;
-				unregister_code(KC_RIGHT);
+				unregister_code(KC_T);
 				if (pressed_left) {
-                    register_code(KC_LEFT);
+                    register_code(KC_R);
 				}
 			}
 			return false;
